@@ -25,17 +25,12 @@ const Background = () => {
 
   return (
     <BackgroundWrap>
-      {/* <Route path="/login" component={Login} /> */}
       <Route
         path="/login"
         render={() => (!loginState ? <Login /> : <Redirect to="/main" />)}
       />
       <Route path="/main" component={Main} />
-      {user.email ? (
-        <Route path={`/detail?email={${user.email}}`} component={Detail} />
-      ) : (
-        ""
-      )}
+      <Route path="/detail" component={Detail} />
     </BackgroundWrap>
   );
 };

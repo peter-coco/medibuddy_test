@@ -67,7 +67,9 @@ const MainForm = () => {
       <MainIdWrap>
         <MainIdTitle>이메일</MainIdTitle>
         <MainIdValue>
-          <Link to={`/detail?email={${user.email}}`}>{user.email}</Link>
+          <Link to={{ pathname: "/detail", search: `?email={${user.email}}` }}>
+            {user.email}
+          </Link>
         </MainIdValue>
       </MainIdWrap>
     </MainFormWrap>

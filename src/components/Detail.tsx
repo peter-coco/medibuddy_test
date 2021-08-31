@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import DetailForm from "./DetailForm";
+import { useSelector } from "react-redux";
+import { GlobalState, UserAccount } from "../redux/reducer";
 
 const DetailBackground = styled.div`
   width: 100vw;
@@ -53,25 +55,18 @@ const CancleBtnBarRight = styled.div`
 `;
 
 const Detail = () => {
-  return (
+  const [user, loginState] = useSelector<GlobalState, [UserAccount, boolean]>(
+    (state) => [state.userAccount, state.loginState]
+  );
+
+  return loginState ? (
     <DetailBackground>
       <DetailWrap>
-        {/* <Link
-          style={{
-            position: "absolute",
-            right: "20px",
-            top: "20px",
-          }}
-          to="/"
-        >
-          <CancleBtnCircle>
-            <CancleBtnBarLeft />
-            <CancleBtnBarRight />
-          </CancleBtnCircle>
-        </Link> */}
         <DetailForm />
       </DetailWrap>
     </DetailBackground>
+  ) : (
+    <></>
   );
 };
 export default Detail;

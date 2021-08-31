@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { GlobalState, UserAccount } from "../redux/reducer";
 
 const DetailFormWrap = styled.div`
   width: 530px;
