@@ -1,7 +1,9 @@
 enum Actions {
   SET_USER_ACCOUNT_VALUE,
   SET_LOGIN_PASS,
+  SET_LOGIN_FAIL,
   CHANGE_EMAIL_VALUE,
+  SET_EMAILCHANGE_VALUE_FALSE,
 }
 
 export default Actions;

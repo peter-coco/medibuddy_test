@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Actions from "../redux/actions";
 import { GlobalState, UserAccount } from "../redux/reducer";
 
 const MainFormWrap = styled.div`
@@ -54,9 +55,26 @@ const MainEmpty = styled.div`
 `;
 
 const MainForm = () => {
+  const dispatch = useDispatch();
+
   const [user, loginState] = useSelector<GlobalState, [UserAccount, boolean]>(
     (state) => [state.userAccount, state.loginState]
   );
+  const [userEmail, setUserEmail] = useState("");
+  const [userAccount, setUserAccount] = useState<string | null>("");
+
+  useEffect(() => {
+    dispatch({
+      type: Actions.SET_EMAILCHANGE_VALUE_FALSE,
+    });
+    setUserAccount(window.localStorage.getItem("userAccount"));
+    if (userAccount) {
+      setUserEmail(JSON.parse(userAccount).email);
+      console.log("fdfdfdf");
+    } else {
+      console.log("HIHI");
+    }
+  }, [loginState, user]);
 
   return (
     <MainFormWrap>
@@ -68,6 +86,7 @@ const MainForm = () => {
         <MainIdTitle>이메일</MainIdTitle>
         <MainIdValue>
           <Link to={{ pathname: "/detail", search: `?email={${user.email}}` }}>
+            {userEmail}
             {user.email}
           </Link>
         </MainIdValue>

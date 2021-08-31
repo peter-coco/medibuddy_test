@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { Redirect, Route } from "react-router-dom";
@@ -19,18 +19,35 @@ const BackgroundWrap = styled.div`
 `;
 
 const Background = () => {
-  const [user, loginState] = useSelector<GlobalState, [UserAccount, boolean]>(
-    (state) => [state.userAccount, state.loginState]
-  );
+  const [user, loginState, isChangedEmail] = useSelector<
+    GlobalState,
+    [UserAccount, boolean, boolean]
+  >((state) => [state.userAccount, state.loginState, state.isChangedEmail]);
+
+  const [userLoginState, setLoginState] = useState(false);
+  const [userAccount, setUserAccount] = useState<string | null>("");
+
+  useEffect(() => {
+    setUserAccount(window.localStorage.getItem("userAccount"));
+    if (userAccount) {
+      setLoginState(JSON.parse(userAccount).loginState);
+    }
+  }, [loginState]);
 
   return (
     <BackgroundWrap>
       <Route
         path="/login"
-        render={() => (!loginState ? <Login /> : <Redirect to="/main" />)}
+        render={() => (!userLoginState ? <Login /> : <Redirect to="/main" />)}
       />
-      <Route path="/main" component={Main} />
-      <Route path="/detail" component={Detail} />
+      <Route
+        path="/main"
+        render={() => <Main userLoginState={userLoginState} />}
+      />
+      <Route
+        path="/detail"
+        render={() => (!isChangedEmail ? <Detail /> : <Redirect to="/main" />)}
+      />
     </BackgroundWrap>
   );
 };

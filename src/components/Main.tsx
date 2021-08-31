@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { Link } from "react-router-dom";
@@ -54,10 +54,20 @@ const CancleBtnBarRight = styled.div`
   transform: rotate(-45deg);
 `;
 
-const Main = () => {
+const Main = ({ userLoginState }: { userLoginState: boolean }) => {
   const [loginState] = useSelector<GlobalState, [boolean]>((state) => [
     state.loginState,
   ]);
+
+  // const [userLoginState, setLoginState] = useState(false);
+  // const [userAccount, setUserAccount] = useState<string | null>("");
+
+  // useEffect(() => {
+  //   setUserAccount(window.localStorage.getItem("userAccount"));
+  //   if (userAccount) {
+  //     setLoginState(JSON.parse(userAccount).loginState);
+  //   }
+  // }, [loginState]);
 
   return loginState ? (
     <MainBackground>

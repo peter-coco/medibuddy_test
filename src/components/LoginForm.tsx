@@ -91,6 +91,7 @@ const LoginBtns = styled.div`
   height: 100%;
 
   & div {
+    cursor: pointer;
     width: 100%;
     height: 100%;
     background-color: #4abd5c;
@@ -137,7 +138,13 @@ const LoginForm = () => {
       alert("이메일 형식으로 입력해주세요 !");
       return;
     } else {
+      let userAccount = {
+        email: email,
+        password: password,
+        loginState: true,
+      };
       loginFunc(email, password);
+      window.localStorage.setItem("userAccount", JSON.stringify(userAccount));
     }
   };
 

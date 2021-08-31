@@ -20,13 +20,6 @@ function App() {
   return (
     <Provider store={store}>
       <Background />
-      {/* <Route path="/login" component={Login} exact /> */}
-      {/* <Route path="/main" component={Main} /> */}
-      {/* {user.email ? (
-        <Route path={`/detail/email={${test}}`} component={Detail} />
-      ) : (
-        ""
-      )} */}
     </Provider>
   );
 }

@@ -8,6 +8,7 @@ export interface UserAccount {
 export interface GlobalState {
   userAccount: UserAccount;
   loginState: boolean;
+  isChangedEmail: boolean;
 }
 
 const initialState: GlobalState = {
@@ -16,6 +17,7 @@ const initialState: GlobalState = {
     password: "",
   },
   loginState: false,
+  isChangedEmail: false,
 };
 
 function reducer(
@@ -34,13 +36,21 @@ function reducer(
         ...state,
         loginState: true,
       };
-    // case Actions.CHANGE_EMAIL_VALUE:
-    //   return {
-    //     ...state,
-    //     userAccount : {
-    //       ...UserAccount,
-    //       email : action.payload.email},
-    //   };
+    case Actions.CHANGE_EMAIL_VALUE:
+      return {
+        ...state,
+        userAccount: {
+          ...state.userAccount,
+          email: action.payload.email,
+        },
+        isChangedEmail: true,
+      };
+
+    case Actions.SET_EMAILCHANGE_VALUE_FALSE:
+      return {
+        ...state,
+        isChangedEmail: false,
+      };
   }
   return state;
 }
