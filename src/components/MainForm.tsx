@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { GlobalState, UserAccount } from "../redux/reducer";
 
 const MainFormWrap = styled.div`
   width: 530px;
@@ -35,12 +37,15 @@ const MainIdWrap = styled.div`
 const MainIdTitle = styled.div`
   width: 40%;
   height: 51px;
+  line-height: 51px;
   text-align: center;
 `;
-const MainIdInput = styled.div`
+const MainIdValue = styled.div`
   width: 60%;
-  height: 100%;
+  height: 51px;
   background-color: #c4c4c4;
+  text-align: center;
+  line-height: 51px;
 `;
 
 const MainEmpty = styled.div`
@@ -49,6 +54,10 @@ const MainEmpty = styled.div`
 `;
 
 const MainForm = () => {
+  const [user, loginState] = useSelector<GlobalState, [UserAccount, boolean]>(
+    (state) => [state.userAccount, state.loginState]
+  );
+
   return (
     <MainFormWrap>
       <MainTitleWrap>
@@ -57,7 +66,9 @@ const MainForm = () => {
       </MainTitleWrap>
       <MainIdWrap>
         <MainIdTitle>이메일</MainIdTitle>
-        <MainIdInput></MainIdInput>
+        <MainIdValue>
+          <Link to={`/detail?email={${user.email}}`}>{user.email}</Link>
+        </MainIdValue>
       </MainIdWrap>
     </MainFormWrap>
   );

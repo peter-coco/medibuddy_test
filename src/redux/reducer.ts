@@ -29,10 +29,10 @@ function reducer(
         ...state,
         userAccount: action.payload.userAccount,
       };
-    case Actions.SET_LOGIN_FAIL_N_PASS:
+    case Actions.SET_LOGIN_PASS:
       return {
         ...state,
-        loginState: action.payload.loginState,
+        loginState: true,
       };
     // case Actions.CHANGE_EMAIL_VALUE:
     //   return {

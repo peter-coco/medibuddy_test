@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import MainForm from "./MainForm";
+import { useSelector } from "react-redux";
+import { GlobalState } from "../redux/reducer";
 
 const MainBackground = styled.div`
   width: 100vw;
@@ -53,25 +55,18 @@ const CancleBtnBarRight = styled.div`
 `;
 
 const Main = () => {
-  return (
+  const [loginState] = useSelector<GlobalState, [boolean]>((state) => [
+    state.loginState,
+  ]);
+
+  return loginState ? (
     <MainBackground>
       <MainWrap>
-        {/* <Link
-          style={{
-            position: "absolute",
-            right: "20px",
-            top: "20px",
-          }}
-          to="/"
-        >
-          <CancleBtnCircle>
-            <CancleBtnBarLeft />
-            <CancleBtnBarRight />
-          </CancleBtnCircle>
-        </Link> */}
         <MainForm />
       </MainWrap>
     </MainBackground>
+  ) : (
+    <></>
   );
 };
 export default Main;

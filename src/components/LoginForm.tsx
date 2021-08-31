@@ -111,9 +111,9 @@ const LoginForm = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
-  const [user] = useSelector<GlobalState, [UserAccount]>((state) => [
-    state.userAccount,
-  ]);
+  // const [user, loginState] = useSelector<GlobalState, [UserAccount, boolean]>(
+  //   (state) => [state.userAccount, state.loginState]
+  // );
 
   const dispatch = useDispatch();
 
@@ -137,17 +137,23 @@ const LoginForm = () => {
       alert("이메일 형식으로 입력해주세요 !");
       return;
     } else {
-      let userAccount = {
-        email: email,
-        password: password,
-      };
-      dispatch({
-        type: Actions.SET_USER_ACCOUNT_VALUE,
-        payload: { userAccount },
-      });
-
-      console.log(user);
+      loginFunc(email, password);
     }
+  };
+
+  const loginFunc = (email: string, password: string) => {
+    let userAccount = {
+      email: email,
+      password: password,
+    };
+    dispatch({
+      type: Actions.SET_USER_ACCOUNT_VALUE,
+      payload: { userAccount },
+    });
+
+    dispatch({
+      type: Actions.SET_LOGIN_PASS,
+    });
   };
 
   return (
@@ -172,6 +178,7 @@ const LoginForm = () => {
       </LoginPWWrap>
       <LoginBtnsWrap>
         <LoginEmpty />
+
         <LoginBtns>
           <LoginBtn
             onClick={() => checkValidUserAccound(userEmail, userPassword)}

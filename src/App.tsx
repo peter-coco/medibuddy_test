@@ -11,15 +11,18 @@ import { Route } from "react-router-dom";
 import Login from "./components/Login";
 import Detail from "./components/Detail";
 import Main from "./components/Main";
-
-// const test = "fdfd";
+import Background from "./components/Background";
 
 function App() {
+  // const [user, loginState] = useSelector<GlobalState, [UserAccount, boolean]>(
+  //   (state) => [state.userAccount, state.loginState]
+  // );
   return (
     <Provider store={store}>
-      <Route path="/login" component={Login} exact />
-      <Route path="/main" component={Main} />
-      {/* {test ? (
+      <Background />
+      {/* <Route path="/login" component={Login} exact /> */}
+      {/* <Route path="/main" component={Main} /> */}
+      {/* {user.email ? (
         <Route path={`/detail/email={${test}}`} component={Detail} />
       ) : (
         ""
