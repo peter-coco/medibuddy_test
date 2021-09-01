@@ -74,11 +74,7 @@ const Main = () => {
   return userLoginState ? (
     <MainBackground>
       <MainWrap>
-        <LogoutBtn onClick={logout}>
-          {/* <CancleBtnBarLeft />
-          <CancleBtnBarRight /> */}
-          로그아웃
-        </LogoutBtn>
+        <LogoutBtn onClick={logout}>로그아웃</LogoutBtn>
         <MainForm />
       </MainWrap>
     </MainBackground>
