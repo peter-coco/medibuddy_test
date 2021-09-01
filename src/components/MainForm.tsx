@@ -15,10 +15,6 @@ const MainFormWrap = styled.div`
   left: -60px;
   gap: 20px;
   justify-content: center;
-  & div {
-    font-size: 25px;
-    color: #fff;
-  }
 `;
 const MainTitleWrap = styled.div`
   display: flex;
@@ -29,6 +25,8 @@ const MainTitle = styled.div`
   width: 60%;
   height: 100%;
   text-align: center;
+  font-size: 30px;
+  color: #fff;
 `;
 const MainIdWrap = styled.div`
   display: flex;
@@ -40,6 +38,8 @@ const MainIdTitle = styled.div`
   height: 51px;
   line-height: 51px;
   text-align: center;
+  font-size: 30px;
+  color: #fff;
 `;
 const MainIdValue = styled.div`
   width: 60%;
@@ -47,6 +47,8 @@ const MainIdValue = styled.div`
   background-color: #c4c4c4;
   text-align: center;
   line-height: 51px;
+  font-size: 20px;
+  color: #fff;
 `;
 
 const MainEmpty = styled.div`

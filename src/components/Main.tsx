@@ -9,8 +9,8 @@ import { GlobalState, UserAccount } from "../redux/reducer";
 import Actions from "../redux/actions";
 
 const MainBackground = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background: #eaf2f7;
   display: flex;
   justify-content: center;
@@ -30,33 +30,23 @@ const MainWrap = styled.div`
   align-items: center;
 `;
 
-const CancleBtnCircle = styled.div`
+const LogoutBtn = styled.div`
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 40px;
+  width: 100px;
   height: 40px;
-  border-radius: 50%;
+  border-radius: 20px;
   background-color: #c4c4c4;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  & > div {
-    position: absolute;
-    width: 30px;
-    height: 5px;
-    background-color: #6f6a62;
-    border-radius: 20px;
-  }
-`;
-const CancleBtnBarLeft = styled.div`
-  transform: rotate(45deg);
-`;
-
-const CancleBtnBarRight = styled.div`
-  transform: rotate(-45deg);
+  color: #000000;
+  font-weight: 600;
+  font-size: 18px;
+  cursor: pointer;
 `;
 
 const Main = () => {
@@ -84,10 +74,11 @@ const Main = () => {
   return userLoginState ? (
     <MainBackground>
       <MainWrap>
-        <CancleBtnCircle onClick={logout}>
-          <CancleBtnBarLeft />
-          <CancleBtnBarRight />
-        </CancleBtnCircle>
+        <LogoutBtn onClick={logout}>
+          {/* <CancleBtnBarLeft />
+          <CancleBtnBarRight /> */}
+          로그아웃
+        </LogoutBtn>
         <MainForm />
       </MainWrap>
     </MainBackground>

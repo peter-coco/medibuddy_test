@@ -27,12 +27,10 @@ const Background = () => {
   const [userLoginState, setLoginState] = useState(false);
 
   useEffect(() => {
-    if (user.loginState === true) {
-      const userAccount = window.sessionStorage.getItem("userAccount");
-      if (userAccount) {
-        setLoginState(JSON.parse(userAccount).loginState);
-      }
-    } else {
+    const userAccount = window.sessionStorage.getItem("userAccount");
+    if (userAccount) {
+      setLoginState(JSON.parse(userAccount).loginState);
+    } else if (userAccount === null && user.loginState === false) {
       setLoginState(false);
     }
   }, [user]);
@@ -42,6 +40,7 @@ const Background = () => {
       <Route
         path="/login"
         render={() => (!userLoginState ? <Login /> : <Redirect to="/main" />)}
+        exact
       />
       <Route
         path="/main"

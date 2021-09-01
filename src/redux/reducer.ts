@@ -13,7 +13,7 @@ export interface GlobalState {
 
 const initialState: GlobalState = {
   userAccount: {
-    email: "medibuddy@naver.com",
+    email: "medibuddy@medibuddy.com",
     password: "medibuddy^^",
     loginState: false,
   },
@@ -52,7 +52,7 @@ function reducer(
     case Actions.SET_LOGOUT:
       return {
         userAccount: {
-          email: "medibuddy@naver.com",
+          email: "medibuddy@medibuddy.com",
           password: "medibuddy^^",
           loginState: false,
         },
