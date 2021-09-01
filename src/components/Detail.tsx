@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { Link } from "react-router-dom";
@@ -55,11 +55,20 @@ const CancleBtnBarRight = styled.div`
 `;
 
 const Detail = () => {
-  const [user, loginState] = useSelector<GlobalState, [UserAccount, boolean]>(
-    (state) => [state.userAccount, state.loginState]
-  );
+  const [user] = useSelector<GlobalState, [UserAccount]>((state) => [
+    state.userAccount,
+  ]);
 
-  return loginState ? (
+  const [userLoginState, setLoginState] = useState(false);
+
+  useEffect(() => {
+    const userAccount = window.sessionStorage.getItem("userAccount");
+    if (userAccount) {
+      setLoginState(JSON.parse(userAccount).loginState);
+    }
+  }, [user.loginState]);
+
+  return userLoginState ? (
     <DetailBackground>
       <DetailWrap>
         <DetailForm />

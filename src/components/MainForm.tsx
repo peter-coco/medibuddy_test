@@ -57,24 +57,21 @@ const MainEmpty = styled.div`
 const MainForm = () => {
   const dispatch = useDispatch();
 
-  const [user, loginState] = useSelector<GlobalState, [UserAccount, boolean]>(
-    (state) => [state.userAccount, state.loginState]
-  );
+  const [user] = useSelector<GlobalState, [UserAccount]>((state) => [
+    state.userAccount,
+  ]);
   const [userEmail, setUserEmail] = useState("");
-  const [userAccount, setUserAccount] = useState<string | null>("");
 
   useEffect(() => {
     dispatch({
       type: Actions.SET_EMAILCHANGE_VALUE_FALSE,
     });
-    setUserAccount(window.localStorage.getItem("userAccount"));
+
+    const userAccount = window.sessionStorage.getItem("userAccount");
     if (userAccount) {
       setUserEmail(JSON.parse(userAccount).email);
-      console.log("fdfdfdf");
-    } else {
-      console.log("HIHI");
     }
-  }, [loginState, user]);
+  }, [user]);
 
   return (
     <MainFormWrap>
@@ -85,7 +82,7 @@ const MainForm = () => {
       <MainIdWrap>
         <MainIdTitle>이메일</MainIdTitle>
         <MainIdValue>
-          <Link to={{ pathname: "/detail", search: `?email={${user.email}}` }}>
+          <Link to={{ pathname: "/detail", search: `?email={${userEmail}}` }}>
             {userEmail}
             {user.email}
           </Link>

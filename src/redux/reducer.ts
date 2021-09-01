@@ -3,11 +3,11 @@ import Actions from "./actions";
 export interface UserAccount {
   email: string;
   password: string;
+  loginState: boolean;
 }
 
 export interface GlobalState {
   userAccount: UserAccount;
-  loginState: boolean;
   isChangedEmail: boolean;
 }
 
@@ -15,8 +15,8 @@ const initialState: GlobalState = {
   userAccount: {
     email: "",
     password: "",
+    loginState: false,
   },
-  loginState: false,
   isChangedEmail: false,
 };
 
@@ -30,11 +30,6 @@ function reducer(
       return {
         ...state,
         userAccount: action.payload.userAccount,
-      };
-    case Actions.SET_LOGIN_PASS:
-      return {
-        ...state,
-        loginState: true,
       };
     case Actions.CHANGE_EMAIL_VALUE:
       return {

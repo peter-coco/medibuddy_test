@@ -19,20 +19,19 @@ const BackgroundWrap = styled.div`
 `;
 
 const Background = () => {
-  const [user, loginState, isChangedEmail] = useSelector<
+  const [user, isChangedEmail] = useSelector<
     GlobalState,
-    [UserAccount, boolean, boolean]
-  >((state) => [state.userAccount, state.loginState, state.isChangedEmail]);
+    [UserAccount, boolean]
+  >((state) => [state.userAccount, state.isChangedEmail]);
 
   const [userLoginState, setLoginState] = useState(false);
-  const [userAccount, setUserAccount] = useState<string | null>("");
 
   useEffect(() => {
-    setUserAccount(window.localStorage.getItem("userAccount"));
+    const userAccount = window.sessionStorage.getItem("userAccount");
     if (userAccount) {
       setLoginState(JSON.parse(userAccount).loginState);
     }
-  }, [loginState]);
+  }, [user.loginState]);
 
   return (
     <BackgroundWrap>
@@ -40,10 +39,7 @@ const Background = () => {
         path="/login"
         render={() => (!userLoginState ? <Login /> : <Redirect to="/main" />)}
       />
-      <Route
-        path="/main"
-        render={() => <Main userLoginState={userLoginState} />}
-      />
+      <Route path="/main" render={() => <Main />} />
       <Route
         path="/detail"
         render={() => (!isChangedEmail ? <Detail /> : <Redirect to="/main" />)}

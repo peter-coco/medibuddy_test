@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Actions from "../redux/actions";
 import { GlobalState, UserAccount } from "../redux/reducer";
+import { checkValidEmail } from "../utils/checkValidAccount";
 
 const DetailFormWrap = styled.div`
   width: 530px;
@@ -88,16 +89,17 @@ const DetailBtns = styled.div`
 const DetailForm = () => {
   const dispatch = useDispatch();
 
+  const [user] = useSelector<GlobalState, [UserAccount]>((state) => [
+    state.userAccount,
+  ]);
   const [userEmail, setUserEmail] = useState("");
   const setUserEmailFunc = (e: any) => {
     setUserEmail(e.target.value);
   };
 
   const changeUserEmailFunc = (email: string) => {
-    let emailFormat =
-      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-
-    if (!emailFormat.test(email)) {
+    const isValidEmail = checkValidEmail(email);
+    if (!isValidEmail) {
       alert("이메일 형식으로 입력해주세요 !");
       return;
     }
@@ -107,7 +109,13 @@ const DetailForm = () => {
       payload: { email },
     });
 
-    // window.localStorage.setItem("userAccount", JSON.stringify(userAccount));
+    const userAccount = {
+      email: email,
+      password: user.password,
+      loginState: true,
+    };
+
+    window.sessionStorage.setItem("userAccount", JSON.stringify(userAccount));
   };
 
   return (

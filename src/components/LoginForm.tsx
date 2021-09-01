@@ -4,6 +4,11 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import Actions from "../redux/actions";
 
+import {
+  checkValidEmail,
+  checkValidPassword,
+} from "../utils/checkValidAccount";
+
 import { GlobalState, UserAccount } from "../redux/reducer";
 
 const LoginFormWrap = styled.div`
@@ -126,40 +131,43 @@ const LoginForm = () => {
     setUserEmail(e.target.value);
   };
 
-  const checkValidUserAccound = (email: string, password: string) => {
-    let passwordFormat = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/;
-    let emailFormat =
-      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+  const checkValidUserAccount = (email: string, password: string) => {
+    const isValidPassword = checkValidPassword(password);
+    const isValidEmail = checkValidEmail(email);
 
-    if (!passwordFormat.test(password)) {
-      alert("대소문자 + 특수문자를 포함한 6자리 이상으로 입력하셔야 합니다.");
+    if (!isValidPassword && isValidEmail) {
+      alert(
+        "password error : 대소문자 + 특수문자를 포함한 6자리 이상으로 입력"
+      );
       return;
-    } else if (!emailFormat.test(email)) {
-      alert("이메일 형식으로 입력해주세요 !");
+    } else if (isValidPassword && !isValidEmail) {
+      alert("email error : 이메일주소 형식으로 입력");
       return;
-    } else {
-      let userAccount = {
-        email: email,
-        password: password,
-        loginState: true,
-      };
-      loginFunc(email, password);
-      window.localStorage.setItem("userAccount", JSON.stringify(userAccount));
+    } else if (!isValidPassword && !isValidEmail) {
+      alert(
+        "password error : 대소문자 + 특수문자를 포함한 6자리 이상으로 입력 \n email error : 이메일주소 형식으로 입력"
+      );
+      return;
     }
+
+    const userAccount = {
+      email: email,
+      password: password,
+      loginState: true,
+    };
+    loginFunc(email, password);
+    window.sessionStorage.setItem("userAccount", JSON.stringify(userAccount));
   };
 
   const loginFunc = (email: string, password: string) => {
     let userAccount = {
       email: email,
       password: password,
+      loginState: true,
     };
     dispatch({
       type: Actions.SET_USER_ACCOUNT_VALUE,
       payload: { userAccount },
-    });
-
-    dispatch({
-      type: Actions.SET_LOGIN_PASS,
     });
   };
 
@@ -188,7 +196,7 @@ const LoginForm = () => {
 
         <LoginBtns>
           <LoginBtn
-            onClick={() => checkValidUserAccound(userEmail, userPassword)}
+            onClick={() => checkValidUserAccount(userEmail, userPassword)}
           >
             로그인
           </LoginBtn>

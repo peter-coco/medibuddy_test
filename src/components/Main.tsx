@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import MainForm from "./MainForm";
 import { useSelector } from "react-redux";
-import { GlobalState } from "../redux/reducer";
+import { GlobalState, UserAccount } from "../redux/reducer";
 
 const MainBackground = styled.div`
   width: 100vw;
@@ -54,22 +54,21 @@ const CancleBtnBarRight = styled.div`
   transform: rotate(-45deg);
 `;
 
-const Main = ({ userLoginState }: { userLoginState: boolean }) => {
-  const [loginState] = useSelector<GlobalState, [boolean]>((state) => [
-    state.loginState,
+const Main = () => {
+  const [user] = useSelector<GlobalState, [UserAccount]>((state) => [
+    state.userAccount,
   ]);
 
-  // const [userLoginState, setLoginState] = useState(false);
-  // const [userAccount, setUserAccount] = useState<string | null>("");
+  const [userLoginState, setLoginState] = useState(false);
 
-  // useEffect(() => {
-  //   setUserAccount(window.localStorage.getItem("userAccount"));
-  //   if (userAccount) {
-  //     setLoginState(JSON.parse(userAccount).loginState);
-  //   }
-  // }, [loginState]);
+  useEffect(() => {
+    const userAccount = window.sessionStorage.getItem("userAccount");
+    if (userAccount) {
+      setLoginState(JSON.parse(userAccount).loginState);
+    }
+  }, [user.loginState]);
 
-  return loginState ? (
+  return userLoginState ? (
     <MainBackground>
       <MainWrap>
         <MainForm />
