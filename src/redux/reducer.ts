@@ -13,8 +13,8 @@ export interface GlobalState {
 
 const initialState: GlobalState = {
   userAccount: {
-    email: "",
-    password: "",
+    email: "medibuddy@naver.com",
+    password: "medibuddy^^",
     loginState: false,
   },
   isChangedEmail: false,
@@ -26,10 +26,13 @@ function reducer(
 ): GlobalState {
   // return type !!
   switch (action.type) {
-    case Actions.SET_USER_ACCOUNT_VALUE:
+    case Actions.SET_LOGIN_PASS:
       return {
         ...state,
-        userAccount: action.payload.userAccount,
+        userAccount: {
+          ...state.userAccount,
+          loginState: true,
+        },
       };
     case Actions.CHANGE_EMAIL_VALUE:
       return {
@@ -44,6 +47,15 @@ function reducer(
     case Actions.SET_EMAILCHANGE_VALUE_FALSE:
       return {
         ...state,
+        isChangedEmail: false,
+      };
+    case Actions.SET_LOGOUT:
+      return {
+        userAccount: {
+          email: "medibuddy@naver.com",
+          password: "medibuddy^^",
+          loginState: false,
+        },
         isChangedEmail: false,
       };
   }

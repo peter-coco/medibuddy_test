@@ -117,11 +117,10 @@ const LoginForm = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
-  // const [user, loginState] = useSelector<GlobalState, [UserAccount, boolean]>(
-  //   (state) => [state.userAccount, state.loginState]
-  // );
-
   const dispatch = useDispatch();
+  const [user] = useSelector<GlobalState, [UserAccount]>((state) => [
+    state.userAccount,
+  ]);
 
   const setUserPasswordFunc = (e: any) => {
     setUserPassword(e.target.value);
@@ -135,40 +134,41 @@ const LoginForm = () => {
     const isValidPassword = checkValidPassword(password);
     const isValidEmail = checkValidEmail(email);
 
+    const passwordErrorMsg =
+      "password error : 대소문자 + 특수문자를 포함한 6자리 이상으로 입력";
+    const emailErrorMsg = "email error : 이메일주소 형식으로 입력";
+
     if (!isValidPassword && isValidEmail) {
-      alert(
-        "password error : 대소문자 + 특수문자를 포함한 6자리 이상으로 입력"
-      );
+      alert(passwordErrorMsg);
       return;
     } else if (isValidPassword && !isValidEmail) {
-      alert("email error : 이메일주소 형식으로 입력");
+      alert(emailErrorMsg);
       return;
     } else if (!isValidPassword && !isValidEmail) {
-      alert(
-        "password error : 대소문자 + 특수문자를 포함한 6자리 이상으로 입력 \n email error : 이메일주소 형식으로 입력"
-      );
+      alert(passwordErrorMsg + "\n" + emailErrorMsg);
       return;
     }
 
-    const userAccount = {
-      email: email,
-      password: password,
-      loginState: true,
-    };
-    loginFunc(email, password);
-    window.sessionStorage.setItem("userAccount", JSON.stringify(userAccount));
+    login(email, password);
   };
 
-  const loginFunc = (email: string, password: string) => {
+  const login = (email: string, password: string) => {
     let userAccount = {
       email: email,
       password: password,
       loginState: true,
     };
+    if (email !== user.email || password !== user.password) {
+      const errorLoginIssue = "로그인 정보가 맞지 않습니다";
+      alert(errorLoginIssue);
+      return;
+    }
+
     dispatch({
-      type: Actions.SET_USER_ACCOUNT_VALUE,
+      type: Actions.SET_LOGIN_PASS,
       payload: { userAccount },
     });
+    window.sessionStorage.setItem("userAccount", JSON.stringify(userAccount));
   };
 
   return (

@@ -97,13 +97,7 @@ const DetailForm = () => {
     setUserEmail(e.target.value);
   };
 
-  const changeUserEmailFunc = (email: string) => {
-    const isValidEmail = checkValidEmail(email);
-    if (!isValidEmail) {
-      alert("이메일 형식으로 입력해주세요 !");
-      return;
-    }
-
+  const resetEmailValue = (email: string) => {
     dispatch({
       type: Actions.CHANGE_EMAIL_VALUE,
       payload: { email },
@@ -114,8 +108,18 @@ const DetailForm = () => {
       password: user.password,
       loginState: true,
     };
-
     window.sessionStorage.setItem("userAccount", JSON.stringify(userAccount));
+  };
+
+  const changeUserEmailFunc = (email: string) => {
+    const isValidEmail = checkValidEmail(email);
+    const emailErrorMsg = "email error : 이메일주소 형식으로 입력";
+    if (!isValidEmail) {
+      alert(emailErrorMsg);
+      return;
+    }
+
+    resetEmailValue(email);
   };
 
   return (

@@ -16,7 +16,7 @@ const MainFormWrap = styled.div`
   gap: 20px;
   justify-content: center;
   & div {
-    font-size: 30px;
+    font-size: 25px;
     color: #fff;
   }
 `;
@@ -84,7 +84,6 @@ const MainForm = () => {
         <MainIdValue>
           <Link to={{ pathname: "/detail", search: `?email={${userEmail}}` }}>
             {userEmail}
-            {user.email}
           </Link>
         </MainIdValue>
       </MainIdWrap>

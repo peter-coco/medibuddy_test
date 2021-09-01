@@ -4,8 +4,9 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import MainForm from "./MainForm";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalState, UserAccount } from "../redux/reducer";
+import Actions from "../redux/actions";
 
 const MainBackground = styled.div`
   width: 100vw;
@@ -14,6 +15,7 @@ const MainBackground = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 `;
 const MainWrap = styled.div`
   width: 957px;
@@ -29,6 +31,9 @@ const MainWrap = styled.div`
 `;
 
 const CancleBtnCircle = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -37,7 +42,7 @@ const CancleBtnCircle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+
   & > div {
     position: absolute;
     width: 30px;
@@ -58,6 +63,7 @@ const Main = () => {
   const [user] = useSelector<GlobalState, [UserAccount]>((state) => [
     state.userAccount,
   ]);
+  const dispatch = useDispatch();
 
   const [userLoginState, setLoginState] = useState(false);
 
@@ -68,9 +74,20 @@ const Main = () => {
     }
   }, [user.loginState]);
 
+  const logout = () => {
+    dispatch({
+      type: Actions.SET_LOGOUT,
+    });
+    window.sessionStorage.removeItem("userAccount");
+  };
+
   return userLoginState ? (
     <MainBackground>
       <MainWrap>
+        <CancleBtnCircle onClick={logout}>
+          <CancleBtnBarLeft />
+          <CancleBtnBarRight />
+        </CancleBtnCircle>
         <MainForm />
       </MainWrap>
     </MainBackground>

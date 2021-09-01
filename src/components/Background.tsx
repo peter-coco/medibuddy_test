@@ -27,11 +27,15 @@ const Background = () => {
   const [userLoginState, setLoginState] = useState(false);
 
   useEffect(() => {
-    const userAccount = window.sessionStorage.getItem("userAccount");
-    if (userAccount) {
-      setLoginState(JSON.parse(userAccount).loginState);
+    if (user.loginState === true) {
+      const userAccount = window.sessionStorage.getItem("userAccount");
+      if (userAccount) {
+        setLoginState(JSON.parse(userAccount).loginState);
+      }
+    } else {
+      setLoginState(false);
     }
-  }, [user.loginState]);
+  }, [user]);
 
   return (
     <BackgroundWrap>
@@ -39,7 +43,10 @@ const Background = () => {
         path="/login"
         render={() => (!userLoginState ? <Login /> : <Redirect to="/main" />)}
       />
-      <Route path="/main" render={() => <Main />} />
+      <Route
+        path="/main"
+        render={() => (userLoginState ? <Main /> : <Redirect to="/Login" />)}
+      />
       <Route
         path="/detail"
         render={() => (!isChangedEmail ? <Detail /> : <Redirect to="/main" />)}
